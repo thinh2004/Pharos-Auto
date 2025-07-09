@@ -1,5 +1,5 @@
 {
-  "name": "pharos-auto-bot",
+  "name": "pharos-auto",
   "version": "1.0.0",
   "description": "Automated bot for interacting with Pharos Testnet",
   "main": "index.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/vikitoshi/Pharos-Auto-Bot.git"
+    "url": "https://github.com/thinh2004/Pharos-Auto.git"
   },
   "keywords": [
     "pharos",
