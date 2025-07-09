@@ -22,6 +22,7 @@ An automated bot for interacting with the Pharos Testnet, performing swaps, tran
 
 1. Clone the repository:
    ```bash
+   git clone https://github.com/thinh2004/Pharos-Auto.git
    cd Pharos-Auto-Bot
    ```
 
@@ -84,15 +85,3 @@ The bot provides color-coded logs:
 3. The bot runs indefinitely until stopped (Ctrl+C)
 4. All transactions use 0 gas price (testnet feature)
 5. The bot includes random delays between operations
-
-## Support 💬
-
-For issues or questions, please open an issue on GitHub.
-
-## Disclaimer ⚠️
-
-This software is provided "as is" without warranties. Use at your own risk. The developers are not responsible for any losses or issues caused by using this bot.
-
-## License 📄
-
-MIT License - See LICENSE file for details
