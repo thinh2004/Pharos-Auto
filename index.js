@@ -213,12 +213,14 @@ const checkBalanceAndApproval = async (wallet, tokenAddress, amount, decimals, s
       logger.step(`Approving ${amount} tokens for ${spender}...`);
       const estimatedGas = await tokenContract.approve.estimateGas(spender, ethers.MaxUint256);
       const feeData = await wallet.provider.getFeeData();
-      const gasPrice = feeData.gasPrice || ethers.parseUnits('1', 'gwei');
+   //   const gasPrice = feeData.gasPrice || ethers.parseUnits('1', 'gwei');
       const approveTx = await tokenContract.approve(spender, ethers.MaxUint256, {
         gasLimit: Math.ceil(Number(estimatedGas) * 1.2),
-        gasPrice,
-        maxFeePerGas: feeData.maxFeePerGas || undefined,
-        maxPriorityFeePerGas: feeData.maxPriorityFeePerGas || undefined,
+        maxFeePerGas: feeData.maxFeePerGas || ethers.parseUnits('2', 'gwei'),
+        maxPriorityFeePerGas: feeData.maxPriorityFeePerGas || ethers.parseUnits('1', 'gwei'),
+     //   gasPrice,
+    //    maxFeePerGas: feeData.maxFeePerGas || undefined,
+    //    maxPriorityFeePerGas: feeData.maxPriorityFeePerGas || undefined,
       });
       const receipt = await waitForTransactionWithRetry(wallet.provider, approveTx.hash);
       logger.success('Approval completed');
@@ -394,12 +396,14 @@ const performSwap = async (wallet, provider, index, jwt, proxy) => {
     }
 
     const feeData = await provider.getFeeData();
-    const gasPrice = feeData.gasPrice || ethers.parseUnits('1', 'gwei');
+  //  const gasPrice = feeData.gasPrice || ethers.parseUnits('1', 'gwei');
     const tx = await contract.multicall(deadline, multicallData, {
       gasLimit: Math.ceil(Number(estimatedGas) * 1.2),
-      gasPrice,
-      maxFeePerGas: feeData.maxFeePerGas || undefined,
-      maxPriorityFeePerGas: feeData.maxPriorityFeePerGas || undefined,
+      maxFeePerGas: feeData.maxFeePerGas || ethers.parseUnits('2', 'gwei'),
+      maxPriorityFeePerGas: feeData.maxPriorityFeePerGas || ethers.parseUnits('1', 'gwei'),
+   //   gasPrice,
+  //    maxFeePerGas: feeData.maxFeePerGas || undefined,
+   //   maxPriorityFeePerGas: feeData.maxPriorityFeePerGas || undefined,
     });
 
     logger.loading(`Swap transaction ${index + 1} sent, waiting for confirmation...`);
@@ -435,14 +439,16 @@ const transferPHRS = async (wallet, provider, index, jwt, proxy) => {
     }
 
     const feeData = await provider.getFeeData();
-    const gasPrice = feeData.gasPrice || ethers.parseUnits('1', 'gwei');
+   // const gasPrice = feeData.gasPrice || ethers.parseUnits('1', 'gwei');
     const tx = await wallet.sendTransaction({
       to: toAddress,
       value: required,
       gasLimit: 21000,
-      gasPrice,
-      maxFeePerGas: feeData.maxFeePerGas || undefined,
-      maxPriorityFeePerGas: feeData.maxPriorityFeePerGas || undefined,
+    //  gasPrice,
+      maxFeePerGas: feeData.maxFeePerGas || ethers.parseUnits('2', 'gwei'), // Default to 2 Gwei if undefined
+      maxPriorityFeePerGas: feeData.maxPriorityFeePerGas || ethers.parseUnits('1', 'gwei'), // Default to 1 Gwei
+      //maxFeePerGas: feeData.maxFeePerGas || undefined,
+      //maxPriorityFeePerGas: feeData.maxPriorityFeePerGas || undefined,
     });
 
     logger.loading(`Transfer transaction ${index + 1} sent, waiting for confirmation...`);
@@ -486,13 +492,15 @@ const wrapPHRS = async (wallet, provider, index, jwt, proxy) => {
     }
 
     const feeData = await provider.getFeeData();
-    const gasPrice = feeData.gasPrice || ethers.parseUnits('1', 'gwei');
+    //const gasPrice = feeData.gasPrice || ethers.parseUnits('1', 'gwei');
     const tx = await wphrsContract.deposit({
       value: amountWei,
       gasLimit: Math.ceil(Number(estimatedGas) * 1.2),
-      gasPrice,
-      maxFeePerGas: feeData.maxFeePerGas || undefined,
-      maxPriorityFeePerGas: feeData.maxPriorityFeePerGas || undefined,
+      //gasPrice,
+      maxFeePerGas: feeData.maxFeePerGas || ethers.parseUnits('2', 'gwei'),
+      maxPriorityFeePerGas: feeData.maxPriorityFeePerGas || ethers.parseUnits('1', 'gwei'),
+      //maxFeePerGas: feeData.maxFeePerGas || undefined,
+      //maxPriorityFeePerGas: feeData.maxPriorityFeePerGas || undefined,
     });
 
     logger.loading(`Wrap transaction ${index + 1} sent, waiting for confirmation...`);
@@ -727,13 +735,15 @@ const addLiquidity = async (wallet, provider, index, jwt, proxy) => {
     }
 
     const feeData = await provider.getFeeData();
-    const gasPrice = feeData.gasPrice || ethers.parseUnits('1', 'gwei');
+    //const gasPrice = feeData.gasPrice || ethers.parseUnits('1', 'gwei');
 
     const tx = await positionManager.mint(mintParams, {
       gasLimit: Math.ceil(Number(estimatedGas) * 1.2),
-      gasPrice,
-      maxFeePerGas: feeData.maxFeePerGas || undefined,
-      maxPriorityFeePerGas: feeData.maxPriorityFeePerGas || undefined,
+      maxFeePerGas: feeData.maxFeePerGas || ethers.parseUnits('2', 'gwei'),
+      maxPriorityFeePerGas: feeData.maxPriorityFeePerGas || ethers.parseUnits('1', 'gwei'),
+     // gasPrice,
+     // maxFeePerGas: feeData.maxFeePerGas || undefined,
+    //  maxPriorityFeePerGas: feeData.maxPriorityFeePerGas || undefined,
     });
 
     logger.loading(`Liquidity Add ${index + 1} sent, waiting for confirmation...`);
